@@ -3,7 +3,7 @@ import pyspark
 
 gw = launch_gateway()
 
-sc = gw.entry_point.getSc()
+sc = gw.entry_point.sc()
 
 conf = pyspark.SparkConf(_jvm=gw.jvm, _jconf=sc.conf())
 

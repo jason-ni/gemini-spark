@@ -7,18 +7,16 @@ import org.apache.spark.util.Utils
 import org.apache.spark.{SparkConf, SparkContext}
 import py4j.GatewayServer
 
+case class EntryPoint(sc: SparkContext)
+
 
 object Main extends App {
-
-  var sc: SparkContext = null
-
-  def getSc(): SparkContext = sc
 
   override def main(args: Array[String]): Unit = {
     println(args)
     val conf = new SparkConf()
-    sc = new SparkContext(conf)
-    val gatewayServer = new GatewayServer(Main, 10050)
+    val sc = new SparkContext(conf)
+    val gatewayServer = new GatewayServer(EntryPoint(sc), 10050)
     val thread = new Thread(new Runnable {
       override def run(): Unit = Utils.logUncaughtExceptions {
         gatewayServer.start()
